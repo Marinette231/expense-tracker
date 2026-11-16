@@ -15,10 +15,29 @@ def load_expenses():
 
     except FileNotFoundError:
         expenses = []
+        print("No previous expenses found. Starting fresh.")
 
+    except json.JSONDecodeError:
+        expenses = []
+        print("Warning: Expense file is corrupted. Starting fresh.")
+        
+def get_valid_amount():
+    while True:
+        try:
+            amount = float(input("Enter amount: "))
+
+            if amount <= 0:
+                print("Amount must be greater than zero.")
+                continue
+
+            return amount
+
+        except ValueError:
+            print("Please enter a valid number.")
+            
 def add_expense():
     name = input("Enter expense name: ")
-    amount = float(input("Enter amount: "))
+    amount = get_valid_amount()
 
     expense = {"name": name,"amount": amount}
 
