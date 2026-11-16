@@ -1,5 +1,10 @@
+import json
+
 expenses = []
 
+def save_expenses():
+    with open("expenses.json", "w") as file:
+        json.dump(expenses, file, indent=4)
 
 def add_expense():
     name = input("Enter expense name: ")
