@@ -6,16 +6,26 @@ def save_expenses():
     with open("expenses.json", "w") as file:
         json.dump(expenses, file, indent=4)
 
+def load_expenses():
+    global expenses
+
+    try:
+        with open("expenses.json", "r") as file:
+            expenses = json.load(file)
+
+    except FileNotFoundError:
+        expenses = []
+
 def add_expense():
     name = input("Enter expense name: ")
     amount = float(input("Enter amount: "))
 
-    expense = {
-        "name": name,
-        "amount": amount
-    }
+    expense = {"name": name,"amount": amount}
 
     expenses.append(expense)
+
+    save_expenses()
+
     print("Expense added successfully!")
 
 
@@ -36,6 +46,7 @@ def view_expenses():
 
 
 def main():
+    load_expenses()
     while True:
         print("\n=== Expense Tracker ===")
         print("1. Add Expense")
